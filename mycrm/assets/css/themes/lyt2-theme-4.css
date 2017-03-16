@@ -46,6 +46,8 @@ body {
 .navbar .navbar-header .navbar-brand {
   color: #ffffff !important;
   border:  0px !important;
+  vertical-align: middle;
+  text-align: center;
 }
 .navbar .navbar-header .navbar-brand img {
   border: 0px !important;
@@ -215,15 +217,23 @@ body {
 }
 
 @media (min-width: 768px) {
-  .navbar .navbar-collapse .navbar-right > li.with-border:before {
-    background: -moz-linear-gradient(top, rgba(136, 136, 136, 0) 0%, rgba(136, 136, 136, 0.2) 50%, rgba(136, 136, 136, 0) 100%);
-    /* FF3.6-15 */
-    background: -webkit-linear-gradient(top, rgba(136, 136, 136, 0) 0%, rgba(136, 136, 136, 0.2) 50%, rgba(136, 136, 136, 0) 100%);
-    /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to bottom, rgba(136, 136, 136, 0) 0%, rgba(136, 136, 136, 0.2) 50%, rgba(136, 136, 136, 0) 100%);
-    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$collapseText-color, endColorstr=$collapseText-color,GradientType=0 );
-    /* IE6-9 */
+  .navbar .navbar-collapse .navbar-right > li.with-border {    
+    margin-right: 15px;
+    display: inline-flex;
+    align-items: center;    
+  }
+  .navbar .navbar-collapse .navbar-right > li.with-border a{
+    display: inline-block;
+    padding: 0 !important;
+    margin-right: 0px !important;
+  }
+  .navbar .navbar-collapse .navbar-right > li span.toggle {    
+    border-right: 1px solid #ddd;
+    padding: 0px 14px;
+  }
+  .navbar .navbar-collapse .navbar-right > li span svg {    
+    width: 8px !important;
+    height: 8px !important;
   }
 }
 .navbar .navbar-collapse .navbar-right > li > a {
@@ -384,6 +394,9 @@ body {
     background: -moz-linear-gradient(left, #2F2854, #1A143A) !important;
     background: linear-gradient(to right, #2F2854 , #1A143A) !important;
 }
+#sidebar > div nav > ul > li.active {
+  border-left: 4px solid #2F2854 !important;
+}
 
 .mycrm-icon > svg {
     width: 12px !important;
@@ -426,6 +439,8 @@ body {
 .user-link-toggle {
     color: black !important;
     font-weight: normal !important;
+    padding: 0 !important;
+    margin-right: 20px;
 }
 .icon-toggle {
     padding: 0 !important;
@@ -537,7 +552,7 @@ ul.sub-menu li.active, ul.sub-menu li.active:hover {
 
 .mycrm-btn-flex {
     padding: 10px 15px;
-    margin-right: 5px;
+    margin-left: 10px;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
@@ -545,6 +560,7 @@ ul.sub-menu li.active, ul.sub-menu li.active:hover {
     color: white;
     font-weight: bold;
     font-size: 12px;
+    height: 35px;
 }
 .mycrm-btn-flex:hover {
     color:white;   
@@ -617,6 +633,7 @@ ul.sub-menu li.active, ul.sub-menu li.active:hover {
     padding: 0px 15px;
     margin: 0px 5px;
     font-size: 12px !important;
+    display: inline-block;
 }
 .mainTitle .content-summary i {
     font-size: inherit !important;
@@ -629,10 +646,19 @@ ul.sub-menu li.active, ul.sub-menu li.active:hover {
     font-weight: normal !important;
 }
 
+@media(min-width: 830px){}
+  .header {
+      margin-bottom: 25px;
+      display: block;
+  }
+  .header .mainTitle {
+    display:inline-block;
+  }
+}
 .header {
-    margin-bottom: 25px;
-    display: flex;
-    align-items: center;
+   margin-bottom: 25px;
+   display: flex;
+   align-items: center;
 }
 .header > h4, .header > div{
     vertical-align: middle;
@@ -660,6 +686,11 @@ ul.sub-menu li.active, ul.sub-menu li.active:hover {
 .table td {
     padding: 12px !important;
     text-align: center left;
+    cursor: default;
+}
+.table th span,
+.table td span {
+  cursor: default;
 }
 .table th input[type='checkbox'], 
 .table td input[type='checkbox']{
