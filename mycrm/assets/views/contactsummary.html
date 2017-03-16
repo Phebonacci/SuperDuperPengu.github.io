@@ -1,0 +1,112 @@
+<div ng-controller="ContactSummaryTabCtrl">
+    <div uib-alert type="{{alert.type}}" close="closeAlert()">
+        <span class="mycrm-icon" ng-include="'assets/images/icons/info.svg'"></span> {{alert.msg}}
+    </div>
+    
+    <div>
+        <div ng-controller="ContactClientsSummaryCtrl" class="pull-left summary-section" id="summary-clients" data-ng-init="initClientsSummary()">
+            <h5> 
+                <span translate="contactsummary.CLIENTS" class="capitalize"></span> 
+                <a translate="contactsummary.VIEWDETAILS" class="pull-right uppercase link text-small"></a>
+            </h5>
+            
+            <table>
+                <tbody>
+                    <tr>
+                        <th translate="contactsummary.ADULTS"></th>
+                        <td>
+                            <ul>
+                                <li ng-repeat="adult in adults track by $index">
+                                    {{adult.FirstName + ' ' + adult.LastName}}
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th translate="contactsummary.CHILDREN"></th>
+                        <td>
+                            <span translate="contactsummary.NOCHILDREN" ng-hide="hasChildren()"></span>
+                            <ul ng-show="hasChildren()">
+                                <li ng-repeat="child in children track by $index">
+                                    {{child.FirstName + ' ' + child.LastName}}
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th translate="contactsummary.PHONE"></th>
+                        <td>
+                            {{client.PrimaryPhone}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th translate="contactsummary.EMAIL"></th>
+                        <td>
+                            <a href class="link">{{client.PrimaryEmail}}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th translate="contactsummary.ADDRESS"></th>
+                        <td>
+                            {{address.formatted_address}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="summary-section pull-right" id="summary-loans" ng-controller="ContactLoansCtrl" data-ng-init="initLoansSummary()">
+            <h5> 
+                <span translate="contactsummary.LOANS" class="capitalize"></span>
+                <a translate="contactsummary.VIEWDETAILS" class="pull-right uppercase link text-small"></a>
+            </h5>             
+            
+            <table>
+                <tr ng-repeat="loan in loans">
+                    <td class="text-bold">
+                        {{loan.LoanAmount ? loan.LoanAmount : 0 | currency}}
+                    </td>
+                    <td>
+                        Borrowed by {{loan.ActivityTitle}} from <strong>{{loan.ActivityOwner}}</strong>
+                    </td>
+                    <td>
+                        <a href class="link">{{loan.LoanStatus}}</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="summary-section pull-right" id="summary-existing-benefits" ng-controller="ContactsExistingBenefitsCtrl" ng-show="false">
+            <h5> 
+                <span translate="contactsummary.EXISTINGBENEFITS" class="capitalize"></span>
+                <span class="count">3</span>
+                <a translate="contactsummary.VIEWDETAILS" class="pull-right uppercase"></a>
+            </h5> 
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th translate="contactsummary.BENEFIT" class="text-bold"></th>                        
+                        <th translate="contactsummary.COVERAMT" class="text-bold"></th>                        
+                        <th translate="contactsummary.INSURER" class="text-bold"></th>                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="insurance in insurances">
+                        <td class="text-bold">
+                            {{insurance.Benefit}}
+                        </td>
+                        <td>
+                            {{insurance.AmountCovered ? insurance.AmountCovered : 0 | currency}}
+                        </td>
+                        <td>
+                            <ul>
+                                <li ng-repeat="insurer in insurance.Insurers"><img src="insurer.icon" /></li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

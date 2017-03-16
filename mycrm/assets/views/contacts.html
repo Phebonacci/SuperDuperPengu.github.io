@@ -1,0 +1,60 @@
+<div ng-controller="ContactsCtrl" id="contacts" data-ng-init="init()">
+    <div class="header">
+        <h4 class="mainTitle no-margin">
+            <span translate="contacts.MYCONTACTS" class="content-title"> My Contacts </span>
+            <span class="content-summary border-right">{{contacts.TotalNumber}} Total Contacts</span>
+            <span class="content-summary">Last Updated <i class="text-bold">{{contacts.UpdatedAt}}</i></span>
+        </h4>
+
+        <div class="pull-right">
+            <a id="add-contact" class="mycrm-btn-flex teal inline">
+                <span ng-include="'assets/images/icons/add_lg.svg'"></span>
+                <span translate="contacts.ADD"></span>
+            </a>
+            <a ic="merge-contact" ng-disabled="!mergeEnabled" uib-tooltip="{{'contacts.MERGETIP' | translate}}" tooltip-placement="bottom" ng-class="['mycrm-btn-flex', 'violet', 'inline', {'disabled': !mergeEnabled}]" tooltip-append-to-body="true">
+                <span ng-include="'assets/images/icons/merge.svg'"></span>
+                <span translate="contacts.MERGE"> Merge Contacts </span>
+            </a>
+        </div>
+    </div>
+    
+    <div class="table-container">
+        <ul class="filter">
+            <li ng-repeat="letter in letters track by $index">
+                <input id="{{'filter' + letter}}" ng-class="{active: letter === filter}" ng-click="filterChanged(letter)" type="button" name="{{letter}}" value="{{letter}}" />
+            </li>
+        </ul>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <input type="checkbox" /> <span translate="contacts.FAMILYNAME"></span>
+                    </th>
+                    <th translate="contacts.CITY"></th>
+                    <th translate="contacts.CONTACTNUM"></th>
+                    <th translate="contacts.ADVISER"></th>
+                    <th translate="contacts.CLIENTTYPE"></th>
+                    <th class="not-bold">
+                        <form>
+                            <input type="text" ng-model="searchCriteria" ng-keyup="$event.keyCode == 13 && search()" placeholder="{{'contacts.SEARCHCONTACTS' | translate}}" class="search-box" />
+                        </form>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="contact in contacts.FamilyList" ng-class="{white: $even, gray: $odd}" ng-click="openContact(contact.FamilyID)">
+                    <td><input type="checkbox" /> <span>{{contact.FamilyFullName}}</span></td>
+                    <td>{{contact.City}}</td>
+                    <td>{{contact.ContactNumber}}</td>
+                    <td>{{contact.Adviser}}</td>
+                    <td>{{contact.ClientType}}</td>
+                    <td>
+                        <a href ng-include="'assets/images/icons/edit.svg'" class="mycrm-icon mycrm-icon-dark"></a>                                        
+                        <a href ng-include="'assets/images/icons/delete.svg'" class="mycrm-icon mycrm-icon-dark"></a>                                        
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

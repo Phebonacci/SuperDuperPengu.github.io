@@ -1,0 +1,179 @@
+<div id="clients-tab-content" ng-controller="ContactClientsTabCtrl">
+    <div id="clients-actions">
+        <a id="send-email" class="mycrm-btn-flex-small teal">
+            <span ng-include="'assets/images/icons/add_lg.svg'"></span>
+            <span translate="contactsummary.ADDEXISTING"></span>
+        </a>
+        
+        <a id="send-email" class="mycrm-btn-flex-small violet">
+            <span ng-include="'assets/images/icons/add_lg.svg'"></span>
+            <span translate="contactsummary.ADDCLIENT"></span>
+        </a>
+    </div>
+    
+    <table id="clients-table" class="simple-table">
+        <thead>
+            <tr>
+                <th translate="contactsummary.NAME" class="text-bold"></th>
+                <th translate="contactsummary.PREFERREDNAME" class="text-bold"></th>
+                <th translate="contactsummary.DOB" class="text-bold"></th>
+                <th translate="contactsummary.GENDER" class="text-bold"></th>
+                <th translate="contactsummary.SMOKER" class="text-bold"></th>
+                <th translate="contactsummary.PHONE" class="text-bold"></th>
+                <th translate="contactsummary.ROLE" class="text-bold"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="client in clients">
+                <td>{{client.FirstName + ' ' + client.LastName}}</td>
+                <td>{{client.PreferredName}}</td>
+                <td>{{client.DOB | date: 'shortDate'}}</td>
+                <td>{{client.Gender}}</td>
+                <td>{{client.SmokerStatus}}</td>
+                <td>
+                    <ul>
+                        <li ng-repeat="phone in client.Phone">
+                            <span>{{phone.Number}}</span>
+                        </li>
+                    </ul>
+                </td>
+                <td>
+                    <span>{{client.Role}}</span>
+                    <a href class="mycrm-icon mycrm-icon-dark" ng-include="'assets/images/icons/edit.svg'"></a>
+                    <a href class="mycrm-icon mycrm-icon-dark" ng-include="'assets/images/icons/delete.svg'"></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h5 translate="contactsummary.RELATIONSHIPS"></h5>
+    <div ng-controller="ContactRelationshipsCtrl" data-ng-init="initRelationships()">
+        <div class="empty-msg-view" ng-show="!hasRelationships()" translate="contactsummary.NORELATIONSHIPS">           
+        </div>
+        <table id="replationships-table" class="simple-table" ng-show="hasRelationships()">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                </tr>
+            </thead>        
+            <tbody>
+                <tr ng-repeat="relationship in relationships">
+                    <td>{{relationship.Name}}</td>
+                    <td>{{relationship.EntityTypeName}}</td>
+                    <td>
+                        <ul>
+                            <li ng-repeat="phone in relationship.Phone">
+                                <span>{{phone.Number}}</span>
+                            </li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li ng-repeat="email in relationship.Email">
+                                <span>{{email.EmailAddress}}</span>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <h5 translate="contactsummary.CONTACTINFO"></h5>
+    <div id="contact-info-section" ng-controller="ContactInfoCtrl">
+        <div id="address-section">
+            <div class="section-head" translate="contactsummary.HOMEADDRESS"></div>
+            <div class="address">
+                <label for="home-address" translate="contactsummary.ADDRESS"></label>
+                <div>
+                    <textarea id="home-address" placeholder="{{'contactsummary.ADDRESSHINT' | translate }}">{{home.FormattedAddress}}</textarea>                    
+                    <label for="same-as-mailing">
+                        <input type="checkbox" id="same-as-mailing" />
+                        <span translate="contactsummary.SAMEASMAILING"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="section-head section-head-margin-top" translate="contactsummary.MAILINGADDRESS"></div>
+            <div>
+                <div class="address">
+                    <label for="mailing-address" translate="contactsummary.ADDRESS"></label>
+                    <textarea id="mailing-address" placeholder="{{'contactsummary.ADDRESSHINT' | translate }}">{{mailing.FormattedAddress}}</textarea>
+                </div>
+            </div>
+            
+            <div id="opt-ins">
+                <label for="include-marketing">
+                    <input type="checkbox" id="include-marketing" />
+                    <span translate="contactsummary.INCLUDENEWSLETTER"></span>
+                </label>
+
+                <label for="include-newsletter">
+                    <input type="checkbox" id="include-newsletter" />
+                    <span translate="contactsummary.INCLUDENEWSLETTER"></span>
+                </label>
+            </div>
+        </div>
+        
+        <div id="adviser-section">
+            <div>
+                <label for="adviser" translate="contactsummary.ADVISER" class="uppercase"></label>
+                <input type="text" id="adviser" class="inputbox" />
+            </div>
+            
+            <div>
+                <label for="email" translate="contactsummary.EMAIL" class="uppercase"></label>
+                <input type="text" id="email" class="inputbox" />
+            </div>
+            
+            <div>
+                <label for="client-type" translate="contactsummary.CLIENTTYPE" class="uppercase"></label>
+                <div id="client-type" class="inputbox"></div>
+                <a href class="violet mycrm-btn">               
+                        <div ng-include="'assets/images/icons/add_lg.svg'" class="mycrm-icon large"></div>
+                    </a>
+            </div>
+            
+            <div>
+                <label for="rating" translate="contactsummary.RATING" class="uppercase"></label>
+                <div id="rating" class="inputbox"></div>
+                <a href class="violet mycrm-btn">               
+                        <div ng-include="'assets/images/icons/add_lg.svg'" class="mycrm-icon large"></div>
+                    </a>
+            </div>
+            
+            <div>
+                <label for="review-month" translate="contactsummary.REVIEWMONTH" class="uppercase"></label>
+                <div id="review-month" class="inputbox"></div>
+                <a href class="violet mycrm-btn">               
+                        <div ng-include="'assets/images/icons/add_lg.svg'" class="mycrm-icon large"></div>
+                    </a>
+            </div>
+            
+            <div>
+                <label for="reference-code" translate="contactsummary.REFERENCECODE" class="uppercase"></label>
+                <div id="reference-code" class="inputbox"></div>
+            </div>
+            
+            <div>
+                <label for="referral-source" translate="contactsummary.REFERRALSOURCE" class="uppercase"></label>
+                <div id="referral-source" class="inputbox"></div>
+                <a href class="violet mycrm-btn">               
+                    <div ng-include="'assets/images/icons/add_lg.svg'" class="mycrm-icon large"></div>
+                </a>
+            </div>
+            
+            <div>
+                <label for="categories" translate="contactsummary.CATEGORIES" class="uppercase"></label>
+                <div id="categories" class="inputbox"></div>
+                <a href class="violet mycrm-btn">               
+                    <div ng-include="'assets/images/icons/add_lg.svg'" class="mycrm-icon large"></div>
+                </a>
+            </div>
+        </div>
+    </div>   
+   
+</div>

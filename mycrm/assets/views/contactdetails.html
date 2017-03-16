@@ -1,0 +1,98 @@
+<div ng-controller="ContactDetailsCtrl" id="contact-summary" data-ng-init="init()">
+   
+    <ul id="breadcrumbs-one">
+        <li>
+            <a class="link" ui-sref="app.contacts">
+                <span class="mycrm-icon mycrm-icon-teal" ng-include="'assets/images/icons/contacts.svg'"></span>
+                <span translate="contactsummary.CONTACTS"></span>
+            </a>
+        </li>
+        <li><a>{{contact.LastName + ' ' + contact.FirstName}}</a></li>
+    </ul>
+    
+    <div class="header">
+        <h4 class="mainTitle no-margin">
+            <span class="content-title">{{contact.DisplayName}}</span>            
+        </h4>
+        
+        <a id="send-email" class="mycrm-btn-flex-small violet">
+            <span ng-include="'assets/images/icons/new_email.svg'"></span>
+            <span translate="contactsummary.SENDEMAIL"></span>
+        </a>
+        <a id="send-mail" class="mycrm-btn-flex-small sky-blue">
+            <span ng-include="'assets/images/icons/new_mail.svg'"></span>
+            <span translate="contactsummary.SENDMAIL"></span>
+        </a>
+        <a id="send-email" class="mycrm-btn-flex-small teal">
+            <span ng-include="'assets/images/icons/print.svg'"></span>
+            <span translate="contactsummary.PRINTSUMMARY"></span>
+        </a>
+        
+        <div class="content-summary">Last Updated <i class="text-bold">{{contact.UpdatedAt}}</i></div>
+    </div>
+    
+    <div class="flex">
+        <div id="tabbed-contents" ng-controller="ContactDetailsMainTabCtrl">
+            <ul class="custom-tab">
+                <li ng-repeat="tab in tabs" ng-class="{'active': tab.slug === activeTab.slug}" ng-click="onTabSelected(tab.slug)">
+                  <span ng-class="[uppercase]">{{tab.title}}</span>
+                </li>
+            </ul>
+            <div class="custom-tab-content">
+                <ng-include src="activeTab.content"></ng-include>
+            </div>
+        </div>
+
+        <div id="contact-activity-content-container">
+            <div id="tasks">
+                <ul id="tasks-tab">
+                    <li> 
+                        <span ng-include="'assets/images/icons/list.svg'" class="mycrm-icon mycrm-icon-dark"></span>
+                        <span translate="contactsummary.ACTIVETASKS" class="uppercase text-bold"></span>
+                    </li>
+                    <li>
+                        <span translate="contactsummary.INACTIVETASKS" class="uppercase text-bold"></span>
+                    </li>
+                </ul>
+                <div id="tasks-content">
+                    <ul>
+                        <li> 
+                            <input type="checkbox" value=""/>
+                            <div class="details">
+                                <div class="title">
+                                    Meeting <span class="indicator-critical">DUE TODAY</span>
+                                </div>
+                                <div class="description"> Meeting for insurance application</div>
+                                <div>
+                                    <span ng-include="'assets/images/icons/users.svg'" class="mycrm-icon mycrm-icon-dark"></span>
+                                    <span class="text-bold">Claurence Marketer</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="contact-notes" ng-controller="ContactsSummaryNotesCtrl" data-ng-init="initNotes()">
+                <div class="section-head">
+                    <span ng-include="'assets/images/icons/notes.svg'" class="mycrm-icon mycrm-icon-dark"></span>
+                    <span translate="contactsummary.NOTES" class="uppercase text-bold"></span>
+                    <span class="count">{{getCount()}}</span>
+                    <a href class="link text-small pull-right uppercase" translate="contactsummary.VIEWALL"></a>
+                </div>
+                <ul>
+                    <li ng-repeat="note in notes">
+                        <div class="content-head">{{note.ActivityTitle}}</div>
+                        <p>{{note.ActivityDetails}}</p>
+                    </li>
+                </ul>
+                <a id="create-note" class="mycrm-btn-flex-small teal">
+                    <span ng-include="'assets/images/icons/add_lg.svg'"></span>
+                    <span translate="contactsummary.CREATENOTE"></span>
+                </a>
+            </div>
+
+        </div>
+        
+    </div>
+</div>
